@@ -16,6 +16,10 @@ public class ParkingOrder {
     private Timestamp carOutTime;
     private String orderStatus;
 
+
+    @Transient
+    private String error;
+
     @ManyToOne
     private ParkingLot parkingLot;
 
@@ -78,4 +82,13 @@ public class ParkingOrder {
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }
+
