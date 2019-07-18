@@ -25,4 +25,12 @@ public class ParkingLotService {
     public List<ParkingLot> findParkingLostByPage(int pageInt) {
         return parkingLotRepository.findAll(new PageRequest(pageInt,15)).getContent();
     }
+
+    public ParkingLot findParkingByName(String name) {
+        return parkingLotRepository.findById(name).get();
+    }
+
+    public ParkingLot updateParkingLotCapacity(ParkingLot parkingLot) {
+        return parkingLotRepository.save(parkingLot);
+    }
 }

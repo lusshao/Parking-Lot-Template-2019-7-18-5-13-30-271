@@ -29,5 +29,16 @@ public class ParkingLotController {
         return parkingLotService.findParkingLostByPage(pageInt);
     }
 
+    @GetMapping(value = "/parking-lots",params = "name")
+    public ParkingLot findParkingLotByName(@RequestParam String name){
+        return parkingLotService.findParkingByName(name);
+    }
+
+    @PutMapping(value = "/parking-lots",params = "capacity")
+    public ParkingLot updateParkingLotCapacity(@RequestParam int capacity,@RequestBody ParkingLot parkingLot){
+        parkingLot.setCapacity(capacity);
+        return parkingLotService.updateParkingLotCapacity(parkingLot);
+    }
+
 
 }

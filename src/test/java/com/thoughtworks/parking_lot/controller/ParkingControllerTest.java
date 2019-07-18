@@ -17,13 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,6 +79,34 @@ public class ParkingControllerTest {
 
         result.andExpect(status().isOk()).andExpect(jsonPath("$[5].name",is("第5停车场")));
     }
+
+    @Test
+    public void should_return_parking_lot_message_when_get_to_parking_lots_given_parking_lots_name() throws Exception {
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
+        when(parkingLotService.findParkingByName(anyString())).thenReturn(parkingLot);
+
+        ResultActions result = mockMvc.perform(get("/parking-lots?name={name}",parkingLot.getName()));
+
+        result.andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void should_update_a_parking_lot_when_put_to_parking_lots_given_new_capacity() throws Exception {
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
+        when(parkingLotService.updateParkingLotCapacity(any())).thenReturn(parkingLot);
+
+        String jsonString ="{\n" +
+                "\n" +
+                "    \"name\": \"lay\",\n" +
+                "    \"capacity\":50,\n" +
+                "    \"address\":\"ddddd\"\n" +
+                "}";
+        ResultActions result = mockMvc.perform(put("/parking-lots?capacity={capacity}",100).contentType(MediaType.APPLICATION_JSON).content(jsonString));
+
+        result.andExpect(status().isOk()).andExpect(jsonPath("$.capacity",is(100)));
+    }
+
 
 
 }
