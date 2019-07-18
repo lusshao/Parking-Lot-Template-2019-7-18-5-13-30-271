@@ -10,7 +10,7 @@ public class ParkingLot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String name;
 
     @Column(nullable = false)
     private int capacity;
@@ -26,12 +26,12 @@ public class ParkingLot {
         this.address = address;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCapacity() {

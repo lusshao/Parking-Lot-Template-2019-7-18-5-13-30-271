@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ParkingLotRepository extends JpaRepository<ParkingLot,Integer> {
+public interface ParkingLotRepository extends JpaRepository<ParkingLot,String> {
 
 
 

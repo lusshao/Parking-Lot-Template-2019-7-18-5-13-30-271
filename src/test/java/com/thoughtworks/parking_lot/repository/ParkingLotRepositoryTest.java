@@ -40,7 +40,7 @@ public class ParkingLotRepositoryTest {
 
         ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
         parkingLotRepository.delete(parkingLot);
-        Optional<ParkingLot> returnParkingLot = parkingLotRepository.findById(parkingLot1.getId());
+        Optional<ParkingLot> returnParkingLot = parkingLotRepository.findById(parkingLot1.getName());
 
         assertThat(returnParkingLot.equals(null));
     }
@@ -62,11 +62,11 @@ public class ParkingLotRepositoryTest {
     }
 
     @Test
-    public void should_return_parking_lot_by_id(){
+    public void should_return_parking_lot_by_name(){
         ParkingLot parkingLot = new ParkingLot(100,"香洲区");
 
         ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
-        Optional<ParkingLot> returnParkingLot = parkingLotRepository.findById(parkingLot1.getId());
+        Optional<ParkingLot> returnParkingLot = parkingLotRepository.findById(parkingLot1.getName());
 
         assertThat(returnParkingLot.get().getAddress()).isEqualTo("香洲区");
         assertThat(returnParkingLot.get().getCapacity()).isEqualTo(100);
@@ -81,7 +81,6 @@ public class ParkingLotRepositoryTest {
         ParkingLot returnParkingLot = parkingLotRepository.save(parkingLot1);
 
         assertThat(returnParkingLot.getCapacity()).isEqualTo(200);
-
     }
 
 }
