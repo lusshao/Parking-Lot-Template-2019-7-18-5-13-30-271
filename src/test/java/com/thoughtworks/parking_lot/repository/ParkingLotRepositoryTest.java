@@ -61,4 +61,16 @@ public class ParkingLotRepositoryTest {
 
     }
 
+    @Test
+    public void should_return_parking_lot_by_id(){
+        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+
+
+        parkingLotRepository.save(parkingLot);
+        Optional<ParkingLot> parkingLot1 = parkingLotRepository.findById(1);
+
+        assertThat(parkingLot1.get().getAddress()).isEqualTo("香洲区");
+        assertThat(parkingLot1.get().getCapacity()).isEqualTo(100);
+    }
+
 }
