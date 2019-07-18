@@ -4,10 +4,9 @@ import com.thoughtworks.parking_lot.model.ParkingLot;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import com.thoughtworks.parking_lot.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ParkingLotController {
@@ -23,6 +22,11 @@ public class ParkingLotController {
     @DeleteMapping("/parking-lots")
     public void deleteParkingLot(@RequestBody ParkingLot parkingLot){
         parkingLotService.deleteParkingLots(parkingLot);
+    }
+
+    @GetMapping(value = "/parking-lots",params = "pageInt")
+    public List<ParkingLot> findParkingLotsByPage(@RequestParam int pageInt){
+        return parkingLotService.findParkingLostByPage(pageInt);
     }
 
 

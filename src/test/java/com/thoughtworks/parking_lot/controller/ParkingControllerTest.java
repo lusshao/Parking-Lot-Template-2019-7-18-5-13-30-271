@@ -13,11 +13,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,5 +69,19 @@ public class ParkingControllerTest {
 
         verify(parkingLotService).deleteParkingLots(any());
     }
+
+    @Test
+    public void should_return_a_list_when_get_to_parking_lots_given_page() throws Exception {
+        List<ParkingLot> parkingLotList = new ArrayList<>();
+        for(int i=0;i<15;i++){
+            parkingLotList.add(new ParkingLot("第"+i+"停车场",100,"香洲区"));
+        }
+        when(parkingLotService.findParkingLostByPage(anyInt())).thenReturn(parkingLotList);
+
+        ResultActions result = mockMvc.perform(get("/parking-lots?pageInt={pageInt}",0));
+
+        result.andExpect(status().isOk()).andExpect(jsonPath("$[5].name",is("第5停车场")));
+    }
+
 
 }
