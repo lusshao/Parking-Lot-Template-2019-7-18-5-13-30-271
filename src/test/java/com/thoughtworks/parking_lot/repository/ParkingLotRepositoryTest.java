@@ -6,9 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.*;
+import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +30,7 @@ public class ParkingLotRepositoryTest {
         ParkingLot returnParkingLot = parkingLotRepository.save(parkingLot);
 
         assertThat(returnParkingLot.getCapacity()).isEqualTo(100);
-        assertThat(returnParkingLot.getPosition()).isEqualTo("香洲区");
+        assertThat(returnParkingLot.getAddress()).isEqualTo("香洲区");
 
     }
 
@@ -41,4 +44,21 @@ public class ParkingLotRepositoryTest {
 
         assertThat(returnParkingLot.equals(null));
     }
+
+    @Test
+    public void should_return_all_parkingLot_list_by_page(){
+        for(int i=0;i<20;i++){
+            if(i<10){
+                parkingLotRepository.save(new ParkingLot(100,"香洲区"));
+            }else{
+                parkingLotRepository.save(new ParkingLot(123,"荷塘区"));
+            }
+        }
+        Page<ParkingLot> parkingLotList = parkingLotRepository.findAll(new PageRequest(0,15));
+
+        assertThat(parkingLotList.getContent().get(1).getAddress()).isEqualTo("香洲区");
+        assertThat(parkingLotList.getContent().get(11).getAddress()).isEqualTo("荷塘区");
+
+    }
+
 }

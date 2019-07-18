@@ -16,14 +16,14 @@ public class ParkingLot {
     private int capacity;
 
     @Column(nullable = false)
-    private String position;
+    private String address;
 
     public ParkingLot() {
     }
 
-    public ParkingLot(int capacity, String position) {
+    public ParkingLot(int capacity, String address) {
         this.capacity = capacity;
-        this.position = position;
+        this.address = address;
     }
 
     public int getId() {
@@ -42,11 +42,11 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
-    public String getPosition() {
-        return position;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
