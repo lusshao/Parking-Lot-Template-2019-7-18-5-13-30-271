@@ -3,13 +3,13 @@ package com.thoughtworks.parking_lot.model;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
 public class ParkingLot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
 
     @Column(nullable = false)
@@ -18,10 +18,14 @@ public class ParkingLot {
     @Column(nullable = false)
     private String address;
 
+    @OneToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY, mappedBy = "parkingLot")
+    private List<ParkingOrder> parkingOrders;
+
     public ParkingLot() {
     }
 
-    public ParkingLot(int capacity, String address) {
+    public ParkingLot(String name, int capacity, String address) {
+        this.name = name;
         this.capacity = capacity;
         this.address = address;
     }

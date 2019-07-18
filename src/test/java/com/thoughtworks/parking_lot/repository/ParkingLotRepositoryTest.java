@@ -25,7 +25,7 @@ public class ParkingLotRepositoryTest {
 
     @Test
     public void should_add_and_return_parkingLot(){
-        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
 
         ParkingLot returnParkingLot = parkingLotRepository.save(parkingLot);
 
@@ -36,7 +36,7 @@ public class ParkingLotRepositoryTest {
 
     @Test
     public void should_delete_parkingLot(){
-        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
 
         ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
         parkingLotRepository.delete(parkingLot);
@@ -48,22 +48,18 @@ public class ParkingLotRepositoryTest {
     @Test
     public void should_return_all_parkingLot_list_by_page(){
         for(int i=0;i<20;i++){
-            if(i<10){
-                parkingLotRepository.save(new ParkingLot(100,"香洲区"));
-            }else{
-                parkingLotRepository.save(new ParkingLot(123,"荷塘区"));
-            }
+            parkingLotRepository.save(new ParkingLot("第"+i+"停车场",100,"香洲区"));
         }
         Page<ParkingLot> parkingLotList = parkingLotRepository.findAll(new PageRequest(0,15));
 
-        assertThat(parkingLotList.getContent().get(1).getAddress()).isEqualTo("香洲区");
-        assertThat(parkingLotList.getContent().get(11).getAddress()).isEqualTo("荷塘区");
+        assertThat(parkingLotList.getContent().get(1).getName()).isEqualTo("第1停车场");
+        assertThat(parkingLotList.getContent().get(11).getName()).isEqualTo("第11停车场");
 
     }
 
     @Test
     public void should_return_parking_lot_by_name(){
-        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
 
         ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
         Optional<ParkingLot> returnParkingLot = parkingLotRepository.findById(parkingLot1.getName());
@@ -74,7 +70,7 @@ public class ParkingLotRepositoryTest {
 
     @Test
     public void should_add_capacity_when_need_extend_parking_lot_given_new_capacity(){
-        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
 
         ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
         parkingLot1.setCapacity(200);
