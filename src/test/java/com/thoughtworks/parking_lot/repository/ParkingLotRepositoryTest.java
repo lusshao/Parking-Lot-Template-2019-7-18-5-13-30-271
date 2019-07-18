@@ -72,4 +72,16 @@ public class ParkingLotRepositoryTest {
         assertThat(returnParkingLot.get().getCapacity()).isEqualTo(100);
     }
 
+    @Test
+    public void should_add_capacity_when_need_extend_parking_lot_given_new_capacity(){
+        ParkingLot parkingLot = new ParkingLot(100,"香洲区");
+
+        ParkingLot parkingLot1 = parkingLotRepository.save(parkingLot);
+        parkingLot1.setCapacity(200);
+        ParkingLot returnParkingLot = parkingLotRepository.save(parkingLot1);
+
+        assertThat(returnParkingLot.getCapacity()).isEqualTo(200);
+
+    }
+
 }
