@@ -15,7 +15,9 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +45,24 @@ public class ParkingControllerTest {
 
         ResultActions result = mockMvc.perform(post("/parking-lots").contentType(MediaType.APPLICATION_JSON).content(jsonString));
 
-        result.andExpect(status().isOk());
+        result.andExpect(status().isOk()).andExpect(jsonPath("$.name",is("第一停车场")));
+    }
+
+    @Test
+    public void should_return_null_when_find_a_deleted_parking_lots() throws Exception {
+        ParkingLot parkingLot = new ParkingLot("第一停车场",100,"香洲区");
+        when(parkingLotService.addParkingLot(any())).thenReturn(parkingLot);
+        String jsonString ="{\n" +
+                "\n" +
+                "    \"name\": \"lay\",\n" +
+                "    \"capacity\":100,\n" +
+                "    \"address\":\"ddddd\"\n" +
+                "}";
+
+        mockMvc.perform(post("/parking-lots").contentType(MediaType.APPLICATION_JSON).content(jsonString));
+        mockMvc.perform(delete("/parking-lots").contentType(MediaType.APPLICATION_JSON).content(jsonString));
+
+        verify(parkingLotService).deleteParkingLots(any());
     }
 
 }

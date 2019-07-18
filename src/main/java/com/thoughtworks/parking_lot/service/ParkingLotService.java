@@ -14,4 +14,8 @@ public class ParkingLotService {
     public ParkingLot addParkingLot(ParkingLot parkingLot) {
         return parkingLotRepository.save(parkingLot);
     }
+
+    public void deleteParkingLots(ParkingLot parkingLot){
+        parkingLotRepository.delete(parkingLot);
+    }
 }
