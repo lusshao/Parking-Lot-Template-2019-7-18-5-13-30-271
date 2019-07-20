@@ -48,7 +48,7 @@ public class IntegrationTest {
     void setup(){ mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build(); }
 
     @Test
-    public void Story1ac1() throws Exception {
+    public void should_return_a_list_when_get_to_parking_lots_given_page() throws Exception {
         for(int i=0;i<20;i++){
             parkingLotRepository.save(new ParkingLot("第"+i+"停车场",100,"香洲区"));
         }

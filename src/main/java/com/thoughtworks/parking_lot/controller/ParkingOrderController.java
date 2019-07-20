@@ -23,7 +23,6 @@ public class ParkingOrderController {
     @PostMapping(value = "/parking-orders",params = "name")
     public ParkingOrder addParkingOrder(@RequestBody ParkingOrder parkingOrder,@RequestParam String name){
 
-        System.out.println(name);
         ParkingLot parkingLot = parkingLotService.findParkingByName(name);
         if(parkingLot==null){
             parkingOrder.setError("停车场不存在");

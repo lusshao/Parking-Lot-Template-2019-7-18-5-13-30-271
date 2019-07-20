@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        var num=document.getElementById("num");
+
+        function add() {
+            num++;
+            document.getElementById("num").innerText=num;
+        }
+        function minus() {
+            num--;
+            document.getElementById("num").innerText=num;
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <button onclick="minus()">-</button>
+    <span id="num">0</span>
+    <button onclick="add()">+</button>
+</div>
+
+</body>
+</html>
